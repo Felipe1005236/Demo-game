@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0pyyavc1w28v"]
+
+[ext_resource type="Texture2D" uid="uid://d04df6s2ea06k" path="res://Art/Pixel UI pack 3/bar_empty.png" id="1_yp45k"]
+[ext_resource type="Texture2D" uid="uid://k0rfoa7ul10j" path="res://Art/Pixel UI pack 3/bar_progress.png" id="2_u5q2k"]
+
+[node name="TextureProgressBar" type="TextureProgressBar"]
+offset_right = 152.0
+offset_bottom = 16.0
+nine_patch_stretch = true
+texture_over = ExtResource("1_yp45k")
+texture_progress = ExtResource("2_u5q2k")

@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://8bpbj4dkgvaj"]
+
+[sub_resource type="GDScript" id="GDScript_wixdw"]
+script/source = "class_name MyHurtBox
+extends Area2D
+
+#func _init() -> void:
+#	collision_layer = 8 
+#	collision_mask = 8
+
+func _ready() -> void:
+	self.area_entered.connect(_on_attack_area_entered)
+	
+func _on_attack_area_entered(hitbox: MyHitBox) -> void:
+	if hitbox == null or hitbox.owner == self.owner:
+		return
+	if owner.has_method(\"take_damage\"):
+		owner.take_damage(hitbox.damage)
+		
+
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x563b"]
+
+[sub_resource type="GDScript" id="GDScript_047i5"]
+script/source = "extends Area2D
+
+@export var damage : int = 10
+
+
+func _on_body_entered(body):
+	print(body.name)
+	#for child in body.get_children():
+	#	if child is Damageable:
+	#		child.hit(damage)
+	
+
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dm731"]
+size = Vector2(84.9234, 43.499)
+
+[node name="MyHurtBox" type="Area2D"]
+collision_layer = 16
+collision_mask = 10
+script = SubResource("GDScript_wixdw")
+
+[node name="MyHurtBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 10
+script = SubResource("GDScript_wixdw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MyHurtBox"]
+position = Vector2(-6.03005, 22.1346)
+scale = Vector2(0.805897, 1.80777)
+shape = SubResource("RectangleShape2D_x563b")
+
+[node name="attack" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 16
+script = SubResource("GDScript_047i5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack"]
+position = Vector2(-1.43051e-06, -23.7267)
+shape = SubResource("RectangleShape2D_dm731")
+disabled = true
+
+[connection signal="body_entered" from="attack" to="attack" method="_on_body_entered"]
